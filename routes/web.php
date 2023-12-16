@@ -24,3 +24,4 @@ Route::get('product', [ProductController::class, 'allProduct']);
 Route::get('add-product', [ProductController::class, 'addProduct']);
 Route::get('sell-product/{id}', [ProductController::class, 'sellProduct']);
 Route::get('edit-product/{id}', [ProductController::class, 'editProduct']);
+Route::get('remove-product/{id}', [ProductController::class, 'deleteProduct']);

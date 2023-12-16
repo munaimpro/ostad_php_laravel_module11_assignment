@@ -22,47 +22,18 @@
                     </tr>
                 </tfoot>
                 <tbody>
+                @foreach($getProducts as $products)
                     <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
+                        <td>{{ $products->name }}</td>
+                        <td>{{ $products->unit_price." Tk" }}</td>
+                        <td>{{ $products->quantity." Pices" }}</td>
                         <td>
-                            <a href="" class="btn btn-success">Sale</a>
-                            <a href="" class="btn btn-primary">Edit</a>
-                            <a href="" class="btn btn-danger">Delete</a>
+                            <a href="{{ url('sell-product/'.$products->id) }}" class="btn btn-success">Sale</a>
+                            <a href="{{ url('edit-product/'.$products->id) }}" class="btn btn-primary">Edit</a>
+                            <a onclick="return confirm('Are you sure to delete?')" href="{{ url('remove-product/'.$products->id) }}" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>
-                            <a href="" class="btn btn-success">Sale</a>
-                            <a href="" class="btn btn-primary">Edit</a>
-                            <a href="" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>
-                            <a href="" class="btn btn-success">Sale</a>
-                            <a href="" class="btn btn-primary">Edit</a>
-                            <a href="" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>
-                            <a href="" class="btn btn-success">Sale</a>
-                            <a href="" class="btn btn-primary">Edit</a>
-                            <a href="" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
-                    
+                @endforeach
                 </tbody>
             </table>
         </div>

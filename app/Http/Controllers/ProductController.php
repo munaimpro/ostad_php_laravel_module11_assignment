@@ -31,4 +31,11 @@ class ProductController extends Controller
     public function sellProduct(){
         return view('sell-product');
     }
+
+    public function deleteProduct($id){
+        $product = DB::table('products')->where('id', $id)->delete();
+        if($product){
+            return back();
+        }
+    }
 }
