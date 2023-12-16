@@ -24,8 +24,9 @@ class ProductController extends Controller
         return view('addproduct');
     }
 
-    public function editProduct(){
-        return view('editproduct');
+    public function editProduct($id){
+        $product = DB::table('products')->where('id', $id)->first();
+        return view('editproduct', ['product' => $product]);
     }
 
     public function sellProduct(){
@@ -62,6 +63,30 @@ class ProductController extends Controller
             return redirect('/add-product')->with('errormsg', 'Something went wrong!');
         }
 
+    }
+
+    public function productUpdate($id, Request $request){
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'quantity' => 'required'
+        ]);
+
+        $productName = $request->input('name');
+        $productPrice = $request->input('price');
+        $productQuantity = $request->input('quantity');
+
+        $result = DB::table('products')->where('id', $id)->update([
+                'name' => $productName,
+                'unit_price' => $productPrice,
+                'quantity' => $productQuantity
+            ]);
+
+        if ($result) {
+            return back()->with('successmsg', 'Product updated successfully');
+        } else {
+            return back()->with('errormsg', 'Something went wrong!');
+        }
     }
 
 
