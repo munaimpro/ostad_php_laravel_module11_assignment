@@ -18,7 +18,9 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/', [ProductController::class, 'dashboard']);
 Route::get('transaction', [ProductController::class, 'allTransaction']);
 Route::get('product', [ProductController::class, 'allProduct']);
 Route::get('add-product', [ProductController::class, 'addProduct']);
+Route::get('sell-product/{id}', [ProductController::class, 'sellProduct']);
 Route::get('edit-product/{id}', [ProductController::class, 'editProduct']);

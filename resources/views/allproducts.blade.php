@@ -26,25 +26,41 @@
                         <td>Tiger Nixon</td>
                         <td>System Architect</td>
                         <td>Edinburgh</td>
-                        <td>61</td>
+                        <td>
+                            <a href="" class="btn btn-success">Sale</a>
+                            <a href="" class="btn btn-primary">Edit</a>
+                            <a href="" class="btn btn-danger">Delete</a>
+                        </td>
                     </tr>
                     <tr>
                         <td>Tiger Nixon</td>
                         <td>System Architect</td>
                         <td>Edinburgh</td>
-                        <td>61</td>
+                        <td>
+                            <a href="" class="btn btn-success">Sale</a>
+                            <a href="" class="btn btn-primary">Edit</a>
+                            <a href="" class="btn btn-danger">Delete</a>
+                        </td>
                     </tr>
                     <tr>
                         <td>Tiger Nixon</td>
                         <td>System Architect</td>
                         <td>Edinburgh</td>
-                        <td>61</td>
+                        <td>
+                            <a href="" class="btn btn-success">Sale</a>
+                            <a href="" class="btn btn-primary">Edit</a>
+                            <a href="" class="btn btn-danger">Delete</a>
+                        </td>
                     </tr>
                     <tr>
                         <td>Tiger Nixon</td>
                         <td>System Architect</td>
                         <td>Edinburgh</td>
-                        <td>61</td>
+                        <td>
+                            <a href="" class="btn btn-success">Sale</a>
+                            <a href="" class="btn btn-primary">Edit</a>
+                            <a href="" class="btn btn-danger">Delete</a>
+                        </td>
                     </tr>
                     
                 </tbody>

@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class ProductController extends Controller
 {
+    public function dashboard(){
+        return view('index');
+    }
+    
     public function allProduct(){
-        return view('allproducts');
+        $getProducts = DB::table('products')->get();
+        return view('allproducts', compact('getProducts'));
     }
 
     public function allTransaction(){
@@ -19,5 +26,9 @@ class ProductController extends Controller
 
     public function editProduct(){
         return view('editproduct');
+    }
+
+    public function sellProduct(){
+        return view('sell-product');
     }
 }
