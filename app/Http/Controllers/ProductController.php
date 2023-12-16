@@ -41,11 +41,29 @@ class ProductController extends Controller
 
     public function productAdd(Request $request){
         $request->validate([
-            'name'=>'required',
-            'price'=>'required',
-            'quantity'=>'required'
+            'name' => 'required',
+            'price' => 'required',
+            'quantity' => 'required'
         ]);
 
-        
+        $productName     = $request->input('name');
+        $productPrice    = $request->input('price');
+        $productQuantity = $request->input('quantity');
+
+        $result = DB::table('products')->insert([
+            'name' => $productName,
+            'unit_price' => $productPrice,
+            'quantity' => $productQuantity
+        ]);
+
+        if($result){
+            return redirect('/add-product')->with('successmsg', 'Product added successfully');
+        } else{
+            return redirect('/add-product')->with('errormsg', 'Something went wrong!');
+        }
+
     }
+
+
+
 }
