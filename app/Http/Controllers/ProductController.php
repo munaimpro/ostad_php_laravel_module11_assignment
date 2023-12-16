@@ -38,4 +38,14 @@ class ProductController extends Controller
             return back();
         }
     }
+
+    public function productAdd(Request $request){
+        $request->validate([
+            'name'=>'required',
+            'price'=>'required',
+            'quantity'=>'required'
+        ]);
+
+        
+    }
 }
