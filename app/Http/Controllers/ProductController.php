@@ -8,31 +8,42 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+    // Function for dashboard page
     public function dashboard(){
         return view('index');
     }
     
+    // Function for product page
     public function allProduct(){
-        $getProducts = DB::table('products')->get();
+        $getProducts = DB::table('products')->where('quantity', '>', 0)->get();
         return view('allproducts', compact('getProducts'));
     }
 
+    // Function for transaction page
     public function allTransaction(){
-        return view('alltransaction');
+        $getTransaction = DB::table('transaction')->select('transaction.*', 'products.name')->join('products', 'transaction.product_id', '=', 'products.id')->orderBy('created_at', 'DESC')->get();
+
+        return view('alltransaction', ['getTransaction' => $getTransaction]);
     }
+
+    // Function for add product page
     public function addProduct(){
         return view('addproduct');
     }
 
+    // Function for edit product page
     public function editProduct($id){
         $product = DB::table('products')->where('id', $id)->first();
         return view('editproduct', ['product' => $product]);
     }
 
-    public function sellProduct(){
-        return view('sell-product');
+    // Function for sell product page
+    public function sellProduct($id){
+        $product = DB::table('products')->where('id', $id)->first();
+        return view('sell-product', ['product' => $product]);
     }
 
+    // Function for product delete
     public function deleteProduct($id){
         $product = DB::table('products')->where('id', $id)->delete();
         if($product){
@@ -40,6 +51,7 @@ class ProductController extends Controller
         }
     }
 
+    // Function for product add
     public function productAdd(Request $request){
         $request->validate([
             'name' => 'required',
@@ -58,13 +70,14 @@ class ProductController extends Controller
         ]);
 
         if($result){
-            return redirect('/add-product')->with('successmsg', 'Product added successfully');
+            return redirect('/product');
         } else{
             return redirect('/add-product')->with('errormsg', 'Something went wrong!');
         }
 
     }
 
+    // Function for product update
     public function productUpdate($id, Request $request){
         $request->validate([
             'name' => 'required',
@@ -89,6 +102,42 @@ class ProductController extends Controller
         }
     }
 
+    // Function for porduct sell
+    public function productSell($id, Request $request){
+        $productById = DB::table('products')->where('id', '=', $id)->first();
+        $oldQuantity = $productById->quantity;
+    
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'quantity' => 'required'
+        ]);
+    
+        $productPrice = $request->input('price');
+        $productQuantity = $request->input('quantity');
+        $remainingQuantity = $oldQuantity - $productQuantity;
+        $totalPrice = $productQuantity * $productPrice;
 
+        if($productQuantity > $oldQuantity){
+            return back()->with('errormsg', 'There are '.$oldQuantity.' products in stock!');
+        } else{
+            $result = DB::table('transaction')->insert([
+                'product_id' => $id,
+                'price' => $totalPrice,
+                'quantity' => $productQuantity
+            ]);
+        
+            $updateQuantity = DB::table('products')->where('id', $id)->update([
+                'quantity' => $remainingQuantity
+            ]);
+        
+            if ($result && $updateQuantity) {
+                return back()->with('successmsg', 'Product sold successfully');
+            } else {
+                return back()->with('errormsg', 'Something went wrong!');
+            }
+        }
+    }
+    
 
 }

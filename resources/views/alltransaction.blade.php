@@ -18,35 +18,18 @@
                         <th>Name</th>
                         <th>Price</th>
                         <th>Quantity</th>
-                        <th>Action</th>
+                        <th>Date</th>
                     </tr>
                 </tfoot>
                 <tbody>
+                @foreach ($getTransaction as $transaction)
                     <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
+                        <td>{{ $transaction->name }}</td>
+                        <td>{{ $transaction->price }}</td>
+                        <td>{{ $transaction->quantity }}</td>
+                        <td>{{ \Carbon\Carbon::parse($transaction->created_at)->format('F j, Y, H:i A') }}</td>
                     </tr>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                    </tr>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                    </tr>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                    </tr>
-                    
+                @endforeach
                 </tbody>
             </table>
         </div>

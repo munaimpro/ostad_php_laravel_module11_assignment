@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('quantity');
             $table->string('unit_price');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 
