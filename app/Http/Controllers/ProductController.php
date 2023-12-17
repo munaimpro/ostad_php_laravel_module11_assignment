@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -10,7 +11,24 @@ class ProductController extends Controller
 {
     // Function for dashboard page
     public function dashboard(){
-        return view('index');
+        $today = Carbon::now()->toDateString();
+        $yesterday = Carbon::yesterday()->toDateString();
+        $startOfMonth = Carbon::now()->startOfMonth()->toDateString();
+        $endOfLastMonth = Carbon::now()->subMonth()->endOfMonth()->toDateString();
+
+        // Fetch total sell for today
+        $totalSellToday = DB::table('transaction')->whereDate('created_at', $today)->sum('price');
+
+        // Fetch total sell for yesterday
+        $totalSellYesterday = DB::table('transaction')->whereDate('created_at', $yesterday)->sum('price');
+
+        // Fetch total sell for this month
+        $totalSellThisMonth = DB::table('transaction')->whereBetween('created_at', [$startOfMonth, $today])->sum('price');
+
+        // Fetch total sell for last month
+        $totalSellLastMonth = DB::table('transaction')->whereBetween('created_at', [$endOfLastMonth, $startOfMonth])->sum('price');
+
+        return view('index', compact('totalSellToday', 'totalSellYesterday', 'totalSellThisMonth', 'totalSellLastMonth'));
     }
     
     // Function for product page
