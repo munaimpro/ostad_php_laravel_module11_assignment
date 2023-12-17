@@ -13,8 +13,11 @@ class ProductController extends Controller
     public function dashboard(){
         $today = Carbon::now()->toDateString();
         $yesterday = Carbon::yesterday()->toDateString();
-        $startOfMonth = Carbon::now()->startOfMonth()->toDateString();
-        $endOfLastMonth = Carbon::now()->subMonth()->endOfMonth()->toDateString();
+        $startOfMonth = now()->startOfMonth();
+        $endOfMonth = now()->endOfMonth();
+
+        $startOfLastMonth = now()->subMonth()->startOfMonth();
+        $endOfLastMonth = now()->subMonth()->endOfMonth();
 
         // Fetch total sell for today
         $totalSellToday = DB::table('transaction')->whereDate('created_at', $today)->sum('price');
@@ -23,10 +26,10 @@ class ProductController extends Controller
         $totalSellYesterday = DB::table('transaction')->whereDate('created_at', $yesterday)->sum('price');
 
         // Fetch total sell for this month
-        $totalSellThisMonth = DB::table('transaction')->whereBetween('created_at', [$startOfMonth, $today])->sum('price');
+        $totalSellThisMonth = DB::table('transaction')->whereBetween('created_at', [$startOfMonth, $endOfMonth])->sum('price');
 
         // Fetch total sell for last month
-        $totalSellLastMonth = DB::table('transaction')->whereBetween('created_at', [$endOfLastMonth, $startOfMonth])->sum('price');
+        $totalSellLastMonth = DB::table('transaction')->whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])->sum('price');
 
         return view('index', compact('totalSellToday', 'totalSellYesterday', 'totalSellThisMonth', 'totalSellLastMonth'));
     }

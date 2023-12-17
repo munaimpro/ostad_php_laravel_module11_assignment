@@ -2,7 +2,7 @@
 @section('content')
 <div class="container px-4">
     <div class="card rounded-lg mt-5">
-        <div class="card-header"><h3 class="font-weight-light my-4">All Products</h3></div>
+        <div class="card-header"><h3 class="font-weight-light my-4">All Transaction</h3></div>
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
