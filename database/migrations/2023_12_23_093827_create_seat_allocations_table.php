@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('seat_allocations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('quantity');
-            $table->string('unit_price');
+            $table->unsignedBigInteger('trip_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('seat_allocations');
     }
 };
