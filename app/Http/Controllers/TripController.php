@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 
-class ProductController extends Controller
+class TripController extends Controller
 {
     // Function for dashboard page
     public function dashboard(){
@@ -20,53 +20,46 @@ class ProductController extends Controller
         $endOfLastMonth = now()->subMonth()->endOfMonth();
 
         // Fetch total sell for today
-        $totalSellToday = DB::table('transaction')->whereDate('created_at', $today)->sum('price');
+        $totalSellToday = DB::table('trips')->whereDate('created_at', $today)->sum('price');
 
         // Fetch total sell for yesterday
-        $totalSellYesterday = DB::table('transaction')->whereDate('created_at', $yesterday)->sum('price');
+        $totalSellYesterday = DB::table('trips')->whereDate('created_at', $yesterday)->sum('price');
 
         // Fetch total sell for this month
-        $totalSellThisMonth = DB::table('transaction')->whereBetween('created_at', [$startOfMonth, $endOfMonth])->sum('price');
+        $totalSellThisMonth = DB::table('trips')->whereBetween('created_at', [$startOfMonth, $endOfMonth])->sum('price');
 
         // Fetch total sell for last month
-        $totalSellLastMonth = DB::table('transaction')->whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])->sum('price');
+        $totalSellLastMonth = DB::table('trips')->whereBetween('created_at', [$startOfLastMonth, $endOfLastMonth])->sum('price');
 
         return view('index', compact('totalSellToday', 'totalSellYesterday', 'totalSellThisMonth', 'totalSellLastMonth'));
     }
     
-    // Function for product page
-    public function allProduct(){
-        $getProducts = DB::table('products')->where('quantity', '>', 0)->get();
-        return view('allproducts', compact('getProducts'));
+    // Function for trip page
+    public function allTrip(){
+        $getTrips = DB::table('trips')->get();
+        return view('alltrips', compact('getTrips'));
     }
 
-    // Function for transaction page
-    public function allTransaction(){
-        $getTransaction = DB::table('transaction')->select('transaction.*', 'products.name')->join('products', 'transaction.product_id', '=', 'products.id')->orderBy('created_at', 'DESC')->get();
-
-        return view('alltransaction', ['getTransaction' => $getTransaction]);
+    // Function for add trip page
+    public function addTrip(){
+        return view('addtrip');
     }
 
-    // Function for add product page
-    public function addProduct(){
-        return view('addproduct');
-    }
-
-    // Function for edit product page
+    // Function for edit trip page
     public function editProduct($id){
-        $product = DB::table('products')->where('id', $id)->first();
+        $product = DB::table('trips')->where('id', $id)->first();
         return view('editproduct', ['product' => $product]);
     }
 
     // Function for sell product page
     public function sellProduct($id){
-        $product = DB::table('products')->where('id', $id)->first();
+        $product = DB::table('trips')->where('id', $id)->first();
         return view('sell-product', ['product' => $product]);
     }
 
     // Function for product delete
     public function deleteProduct($id){
-        $product = DB::table('products')->where('id', $id)->delete();
+        $product = DB::table('trips')->where('id', $id)->delete();
         if($product){
             return back();
         }

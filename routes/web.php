@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TripController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/', [ProductController::class, 'dashboard']);
-Route::get('trip', [ProductController::class, 'allTrip']);
-Route::get('add-trip', [ProductController::class, 'addTrip']);
-Route::post('tripAdd', [ProductController::class, 'tripAdd']);
+Route::get('/', [TripController::class, 'dashboard']);
+Route::get('trip', [TripController::class, 'allTrip']);
+Route::get('add-trip', [TripController::class, 'addTrip']);
+Route::post('tripAdd', [TripController::class, 'tripAdd']);
