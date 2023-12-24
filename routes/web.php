@@ -1,7 +1,7 @@
 <?php
-
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TripController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +14,24 @@ use App\Http\Controllers\TripController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
+// Route::get('/', function () {
+//     return view('index');
+// });
+Route::get('/', [HomeController::class, 'showDropdown'])->name('index');
+Route::post('/bus-view', [HomeController::class, 'busView'])->name('bus_view');
+Route::post('/buy_now', [HomeController::class, 'processPurchase'])->name('buy_now');
+Route::post('/dashboard', [HomeController::class, 'processPurchase_Final'])->name('checkoutFinal');
+//Show Notice 
+Route::get('/bus-view', function () {
+    return view('notice');
+})->name('bus_view_Notice');
+
+Route::get('/dashboard',[HomeController::class, 'user_type_check'])->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/', [TripController::class, 'dashboard']);
-Route::get('trip', [TripController::class, 'allTrip']);
-Route::get('add-trip', [TripController::class, 'addTrip']);
-Route::post('tripAdd', [TripController::class, 'tripAdd']);
+require __DIR__.'/auth.php';

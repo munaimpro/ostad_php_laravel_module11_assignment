@@ -1,59 +1,46 @@
-@extends('layout.app')
-@section('content')
-<div class="container-fluid px-4">
-    <h1 class="mt-4">Dashboard</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Dashboard</li>
-    </ol>
-    <div class="row">
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-primary text-white mb-4">
-                <div class="card-body">
-                    <p>Todays Sell</p>
-                    <h1>{{ $totalSellToday }} Tk</h1>
-                </div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-warning text-white mb-4">
-                <div class="card-body">
-                    <p>Yesterdays Sell</p>
-                    <h1>{{ $totalSellYesterday }} Tk</h1>
-                </div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-success text-white mb-4">
-                <div class="card-body">
-                    <p>This Month Sell</p>
-                    <h1>{{ $totalSellThisMonth }} Tk</h1>
-                </div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-danger text-white mb-4">
-                <div class="card-body">
-                    <p>Last Month Sell</p>
-                    <h1>{{ $totalSellLastMonth }} Tk</h1>
-                </div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
+@extends('layouts.home_app')
+
+    @section('content')
+    <div class="container mt-5">
+    <div class="row mt-5 mb-5">
+			<div class="col-md-6 ">
+				<div class="card mt-3 border border-primary ">
+					<div class="card-body">
+						<form action = "{{ route('bus_view') }}" method="POST">  
+                        @csrf
+						  <div class="form-group my-2">
+							<label for="from">Boarding Point:</label>
+							<select class="form-control" name="from" id="from" required>
+								<option value="">Select Boarding Point</option>
+                                @foreach($busStops as $stopName)
+                                    <option value="{{ $stopName }}">{{ $stopName }}</option>
+                                @endforeach
+							</select>
+						   </div>
+														
+						   <div class="form-group my-2">
+							<label for="to">Dropping Point:</label>
+							<select class="form-control" name="to" id="to" required>
+								<option value="">Select Dropping Point</option>
+                                @foreach($busStops as $stopName)
+                                    <option value="{{ $stopName }}">{{ $stopName }}</option>
+                                @endforeach
+							</select>
+						   </div>
+							
+							<div class="my-2"> 
+								<label for = "doj"> Date Of Journey: </label>  
+								<input type = "date"  id="doj" class = "form-control" name = "doj" placeholder = "Select Date Of Journey" required>  
+							</div>   
+							<button type = "submit" name="submit" class = "btn btn-danger text-center"> Search Bus </button>  
+							</form>   
+					</div>
+				  </div>
+				
+			</div>
+			<div class="col-md-4 order-first order-md-last">
+				<span><img src="{{asset('assets/img/home_bus.jpg')}}" alt="Image Missing" style="width: 500px; height: 300px;" ></span>
+			  </div>
+		  </div>
     </div>
-</div>
-@endsection
+    @endsection
